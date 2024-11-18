@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../../../dialog/d_color_bottom.dart';
 import '../../../dialog/d_confirm.dart';
+import '../../s_main.dart';
 import 'w_ttoss_app_bar.dart';
 
 class HomeFragment extends StatelessWidget {
@@ -23,23 +24,30 @@ class HomeFragment extends StatelessWidget {
       color: Colors.black,
       child: Stack(
         children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.only(top: 60),
-            child: Column(
-              children: [
-                BigButton("Toss bank", onTap: () {
-                  context.showSnackbar("click toss bank");
-                }),
-                RoundedContainer(
-                    child: Column(
-                  children: [
-                    "zasan".text.bold.white.make(),
-                    height5,
-                    ...bankAccounts.map((e) => BankAccountWidget(e)).toList(),
-                  ],
-                ))
-              ],
-            ).pSymmetric(h: 20),
+          RefreshIndicator(
+            edgeOffset: TtossAppBar.appBarHeight,
+            onRefresh: () async {},
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                  top: TtossAppBar.appBarHeight,
+                  bottom: MainScreenState.bottomNavigationBarBorderRadius),
+              child: Column(
+                children: [
+                  BigButton("Toss bank", onTap: () {
+                    context.showSnackbar("click toss bank");
+                  }),
+                  height10,
+                  RoundedContainer(
+                      child: Column(
+                    children: [
+                      "zasan".text.bold.white.make(),
+                      height5,
+                      ...bankAccounts.map((e) => BankAccountWidget(e)).toList(),
+                    ],
+                  ))
+                ],
+              ).pSymmetric(h: 20),
+            ),
           ),
           const TtossAppBar()
         ],
